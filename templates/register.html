@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Hello, world!</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="/static/style.css" />
+
+    <!-- Jquery  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      function sign_up() {
+        // Logika untuk tindakan saat tombol Sign Up diklik
+        // Misalnya, melakukan validasi dan mengirimkan data formulir ke server
+        console.log('Sign Up button clicked');
+        $('#registrationForm').submit();
+      }
+
+      function cancel() {
+        window.location.href = '/login';
+      }
+
+      function clearInputs() {
+        console.log('Clear button clicked');
+
+        // Menghapus nilai dari inputan formulir
+        $('#inputnama').val('');
+        $('#inputnoKTP').val('');
+        $('#inputPassword').val('');
+        $('#inputnoTelp').val('');
+        $('#inputemail').val('');
+        $('#inputAddress').val('');
+      }
+
+      $(document).ready(function () {
+        // Mengirim data form ke server menggunakan Ajax
+        $('#registrationForm').submit(function (event) {
+          event.preventDefault(); // Mencegah pengiriman form secara default
+
+          var formData = {
+            nama: $('#inputnama').val(),
+            email: $('#inputemail').val(),
+            inputPassword: $('#inputPassword').val(),
+            KTP: $('#inputnoKTP').val(),
+            inputnoTelp: $('#inputnoTelp').val(),
+            inputAddress: $('#inputAddress').val(),
+          };
+
+          $.ajax({
+            type: 'POST',
+            url: '/register',
+            data: formData,
+            success: function (response) {
+              // Handle respon dari server setelah berhasil mendaftar
+              console.log(response);
+              // Redirect ke halaman lain, misalnya halaman berhasil registrasi
+              window.location.href = '/success.html';
+            },
+            error: function (error) {
+              // Handle error jika terjadi kesalahan dalam request
+              console.log(error);
+              alert('An error occurred during registration. Please try again.');
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Login -->
+    <div class="auth">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-7 col-lg-5">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="mb-5"><b>SIGN UP</b></h2>
+                <form id="registrationForm">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputnama"><b>Nama Lengkap</b></label>
+                      <input type="text" class="form-control" id="inputnama" placeholder="Enter Name" />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputnoKTP"><b>No. Identitas (KTP)</b></label>
+                      <input type="text" class="form-control" id="inputnoKTP" placeholder="Enter Identitas" />
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputPassword"><b>Password</b></label>
+                      <input type="password" class="form-control" id="inputPassword" placeholder="Enter Password" />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputnoTelp"><b>Nomor Telephone</b></label>
+                      <input type="text" class="form-control" id="inputnoTelp" placeholder="Enter No.Telp" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputemail"><b>Email Address</b></label>
+                    <input type="email" class="form-control" id="inputemail" placeholder="name@gmail.com" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputAddress"><b>Address</b></label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="Enter Address" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="uploadfoto"><b>Upload Profile Picture</b></label>
+                    <input type="file" class="form-control-file" id="uploadfoto" />
+                  </div>
+
+                  <nav class="level is-mobile mt-4">
+                    <button type="button" class="level-item btn btn-primary mx-2" onclick="sign_up()">Sign Up</button>
+                    <button type="button" class="level-item btn btn-outline-primary mx-2" onclick="cancel()">Cancel</button>
+                    <button type="button" class="level-item btn btn-outline-primary mx-2" onclick="clearInputs()">Clear</button>
+                  </nav>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Login -->
+  </body>
+</html>
